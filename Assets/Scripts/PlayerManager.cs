@@ -95,12 +95,14 @@ public class PlayerManager : MonoBehaviour
 
 		for (int i = 0; i < numberPlayers; i++)
 		{
+            if (Players[i] == null) continue;
 			Players[i].GetComponent<Player>().Update();
 		}
 
 		for(int i = 0; i < Players.Length; i++)
 		{
-			Player currentPlayer = Players[i].GetComponent<Player>();
+            if (Players[i] == null) continue;
+            Player currentPlayer = Players[i].GetComponent<Player>();
 			//if a player pressed a button
 			if (currentPlayer.currentButtonIndex > -1)
 			{
@@ -123,6 +125,7 @@ public class PlayerManager : MonoBehaviour
             if (Players[i] != null) continue;
 
             x360_Gamepad pad = GamepadManager.Instance.GetGamepad(i + 1);
+            if (!pad.IsConnected) continue;
             bool pressed = pad.GetButton("A");
             if (pressed)
             {
