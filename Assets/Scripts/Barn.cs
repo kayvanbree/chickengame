@@ -38,7 +38,10 @@ public class Barn : MonoBehaviour
         {
             hp = 0;
             State = BarnState.Dead;
-            barnDestroyed();
+            if (barnDestroyed != null)
+                barnDestroyed();
+            else
+                Debug.Log("A non player barn was destroyed!");
         }
         HealthBar.fillAmount = (float)hp / (float)maxHp;
         HealthBar.color = Color.Lerp(Color.red, Color.green, hp / maxHp);
