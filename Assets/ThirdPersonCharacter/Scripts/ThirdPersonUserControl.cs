@@ -9,6 +9,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     {
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         private Vector3 m_Move;
+		public int playerIdx = -1;
         
         private void Start()
         {
@@ -20,11 +21,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private void FixedUpdate()
         {
             // read inputs
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            float v = CrossPlatformInputManager.GetAxis("Vertical");
+            float h = GamepadManager.Instance.GetGamepad(playerIdx).GetStick_L().X; 
+			float v = GamepadManager.Instance.GetGamepad(playerIdx).GetStick_L().Y; 
 
-            // we use world-relative directions in the case of no main camera
-            m_Move = v*Vector3.forward + h*Vector3.right;
+			// we use world-relative directions in the case of no main camera
+			m_Move = v*Vector3.forward + h*Vector3.right;
 
             // pass all parameters to the character control script
             m_Character.Move(m_Move);

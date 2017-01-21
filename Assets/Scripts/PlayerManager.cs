@@ -34,6 +34,8 @@ public class PlayerManager : MonoBehaviour
 
 			player.GetComponent<Player>().playerIdx = i;
 
+			player.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().playerIdx = (i + 1);
+
 			// set the indices for the buttons, this way we can later on check if the button index was the same as some other action
 			for (int j = 0; j < 6; j++)
 				player.GetComponent<Player>().buttonIndices[j] = buttonIndices[i * 6 + j];
