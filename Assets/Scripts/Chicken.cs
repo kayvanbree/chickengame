@@ -23,6 +23,11 @@ public class Chicken : MonoBehaviour
     public float maxWander = 10f;
     public float wanderDistance = 1f;
 
+    public float wanderMinX = -17.06f;
+    public float wanderMaxX = 28.18f;
+    public float wanderMinZ = -0.53f;
+    public float wanderMaxZ = 28.88f;
+
     public enum ChickenState
 	{
 		Idle = 0,
@@ -68,10 +73,9 @@ public class Chicken : MonoBehaviour
 
     Vector3 GetRandomWanderTarget()
     {
-        float randx = Random.Range(-maxWander, maxWander);
-        float randz = Random.Range(-maxWander, maxWander);
+        float randx = Random.Range(wanderMinX, wanderMaxX);
+        float randz = Random.Range(wanderMinZ, wanderMaxZ);
         Vector3 randomVector = transform.position + new Vector3(randx, 0f, randz);
-        //TODO: Clip this vector to playing field size
         return randomVector;
     }
 
