@@ -45,6 +45,7 @@ public class Chicken : MonoBehaviour
 	public void GoToBarn(GameObject barn)
 	{
 		// start coroutine of moving towards target
+		StopCoroutine(MoveTowardsBarn(barn.transform));
 		StartCoroutine(MoveTowardsBarn(barn.transform));
 		StopCoroutine(MoveTowardsBarn(barn.transform));
 	}
