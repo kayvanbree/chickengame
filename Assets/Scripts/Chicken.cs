@@ -57,6 +57,8 @@ public class Chicken : MonoBehaviour
             barn.Attack(dps);
             yield return new WaitForSeconds(1f);
         }
+
+        // Return to base if still allive and out of range
         if (barn.State == BarnState.Alive)
         {
             if (!IsNearBarn(barn))
@@ -66,6 +68,7 @@ public class Chicken : MonoBehaviour
         }
         else
         {
+            // Idle when base down
             chickenState = ChickenState.Idle;
         }
         
@@ -76,12 +79,16 @@ public class Chicken : MonoBehaviour
         return Vector3.Distance(transform.position, barn.transform.position) <= radius;
     }
 
-	public void GoToBarn(GameObject barn)
+	public void GoToBarn(GameObject gameObject)
 	{
-		// start coroutine of moving towards target
-		StopCoroutine(MoveTowardsBarn(barn.transform));
-		StartCoroutine(MoveTowardsBarn(barn.transform));
-		StopCoroutine(MoveTowardsBarn(barn.transform));
+        Barn barn = gameObject.GetComponent<Barn>();
+        if (barn != null && barn.State == BarnState.Alive)
+        {
+            // start coroutine of moving towards target
+            StopCoroutine(MoveTowardsBarn(barn.transform));
+            StartCoroutine(MoveTowardsBarn(barn.transform));
+            StopCoroutine(MoveTowardsBarn(barn.transform));
+        }
     }
 
 	IEnumerator MoveTowardsBarn(Transform barnTransform)
