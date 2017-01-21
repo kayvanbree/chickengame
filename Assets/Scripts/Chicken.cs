@@ -18,7 +18,12 @@ public class Chicken : MonoBehaviour
 
 	Player ownedPlayer = null;
 
-	public enum ChickenState
+    // Wander stuff for idle
+    public Vector3 wanderTarget;
+    public float maxWander = 10f;
+    public float wanderDistance = 1f;
+
+    public enum ChickenState
 	{
 		Idle = 0,
 		GoToBase,
@@ -32,11 +37,42 @@ public class Chicken : MonoBehaviour
     {
         Velocity = Vector3.zero;
         //Target = null;
+        wanderTarget = GetRandomWanderTarget();
+        StartCoroutine(Idle());
 	}
 	
 	void Update ()
     {
        
+    }
+
+    IEnumerator Idle()
+    {
+        while(chickenState == ChickenState.Idle)
+        {
+            // Generate random Vector3
+            if(Vector3.Distance(transform.position, wanderTarget) < wanderDistance || wanderTarget == null)
+            {
+                wanderTarget = GetRandomWanderTarget();
+            }
+
+            //Rotate to the target
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GetChickenDirection(wanderTarget)), Time.deltaTime * maxTurn);
+
+            //Move to the target
+            transform.position = Vector3.MoveTowards(transform.position, wanderTarget, maxSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+    }
+
+    Vector3 GetRandomWanderTarget()
+    {
+        float randx = Random.Range(-maxWander, maxWander);
+        float randz = Random.Range(-maxWander, maxWander);
+        Vector3 randomVector = transform.position + new Vector3(randx, 0f, randz);
+        //TODO: Clip this vector to playing field size
+        return randomVector;
     }
 
     public void AttackBarn(GameObject gameObject)
@@ -97,7 +133,7 @@ public class Chicken : MonoBehaviour
 		while (Vector3.Distance(transform.position, barnTransform.position) > radius)
 		{
 			//Rotate to the target
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GetChickenDirection(barnTransform)), Time.deltaTime * maxTurn);
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GetChickenDirection(barnTransform.position)), Time.deltaTime * maxTurn);
 
 			//Move to the target
 			transform.position = Vector3.MoveTowards(transform.position, barnTransform.transform.position, maxSpeed * Time.deltaTime);
@@ -108,9 +144,9 @@ public class Chicken : MonoBehaviour
         AttackBarn(barnTransform.gameObject);
     }
 
-    Vector3 GetChickenDirection(Transform barn)
+    Vector3 GetChickenDirection(Vector3 position)
     {
-        Vector3 direction = barn.position - transform.position;
+        Vector3 direction = position - transform.position;
         direction.Normalize();
         return direction;
     }
