@@ -157,7 +157,8 @@ public class Player : MonoBehaviour
 				{
 					Vector3 direction = transform.position - InRadius[i].gameObject.transform.position;
 					direction.Normalize();
-					InRadius[i].attachedRigidbody.AddForce((-direction * 15.0f), ForceMode.Impulse);
+                    direction.y = 0;
+                    InRadius[i].attachedRigidbody.AddForce((-direction * 15.0f), ForceMode.Impulse);
 				}
 			}
 		}
