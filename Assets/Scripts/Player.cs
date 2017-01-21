@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
 
 	private GameObject brainwaveclone;
 	public GameObject BrainWavePrefab;
+	public GameObject SmokeBlastParticlePrefab;
 
 	private Barn barn;
 	public Barn Barn
@@ -193,8 +194,10 @@ public class Player : MonoBehaviour
 				audioSource.clip = clipTriggerLeft;
 				audioSource.Play();
 				currentButtonIndex = GetButtonIndex("LT");
+				
+				Instantiate(SmokeBlastParticlePrefab, transform.position, transform.rotation);
 				// do explosion burst in radius
-				for(int i = 0; i < InRadius.Count; i++)
+				for (int i = 0; i < InRadius.Count; i++)
 				{
 					Vector3 direction = transform.position - InRadius[i].gameObject.transform.position;
 					direction.Normalize();
