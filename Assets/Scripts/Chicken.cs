@@ -75,7 +75,7 @@ public class Chicken : MonoBehaviour
     {
         float randx = Random.Range(wanderMinX, wanderMaxX);
         float randz = Random.Range(wanderMinZ, wanderMaxZ);
-        Vector3 randomVector = transform.position + new Vector3(randx, 0f, randz);
+        Vector3 randomVector = new Vector3(randx, 0f, randz);
         return randomVector;
     }
 
