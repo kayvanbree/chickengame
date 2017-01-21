@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Barn : MonoBehaviour {
+public class Barn : MonoBehaviour
+{
+    public float hp = 100;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public void Attack(float damage)
+    {
+        hp -= damage;
+    }
 }

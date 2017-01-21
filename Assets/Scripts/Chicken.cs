@@ -9,9 +9,12 @@ public class Chicken : MonoBehaviour
     public float maxSpeed = 15f;
     public float maxForce = 1f;
     public float maxTurn = 1f;
+
+    // Radius for barn finding
     public float radius = 1f;
 
-    private ChickenBehaviour ChickenBehaviour { get; set; }
+    // The dps of the chicken to the barn
+    public float dps = 1f;
 
 	Player ownedPlayer = null;
 
@@ -23,7 +26,7 @@ public class Chicken : MonoBehaviour
 		NumberStates
 	}
 
-	ChickenState chickenState = ChickenState.Idle;
+    ChickenState chickenState = ChickenState.Idle;
 
 	void Start ()
     {
@@ -31,15 +34,34 @@ public class Chicken : MonoBehaviour
         //Target = null;
 	}
 	
-	/// <summary>
-    /// Moves the chicken
-    /// </summary>
 	void Update ()
     {
-       // if(ChickenBehaviour ==  null)
-       //     ChickenBehaviour = new Seek(this);
+       
+    }
 
-       // Vector3 targetLocation = ChickenBehaviour.GetTargetPosition(Target);
+    public void AttackBarn(GameObject gameObject)
+    {
+        Barn barn = gameObject.GetComponent<Barn>();
+        if(barn != null)
+        {
+            StartCoroutine(Attack(barn));
+            StopCoroutine(Attack(barn));
+        } 
+    }
+
+    IEnumerator Attack(Barn barn)
+    {
+        // Check if we are in correct state and radius
+        while (chickenState == ChickenState.AttackBase && IsNearBarn(barn))
+        {
+            barn.Attack(dps);
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private bool IsNearBarn(Barn barn)
+    {
+        return Vector3.Distance(transform.position, barn.transform.position) <= radius;
     }
 
 	public void GoToBarn(GameObject barn)
@@ -47,13 +69,14 @@ public class Chicken : MonoBehaviour
 		// start coroutine of moving towards target
 		StartCoroutine(MoveTowardsBarn(barn.transform));
 		StopCoroutine(MoveTowardsBarn(barn.transform));
-	}
+    }
 
 	IEnumerator MoveTowardsBarn(Transform barnTransform)
 	{
 		//Find distance
 		Vector3 direction = barnTransform.position - transform.position;
 		direction.Normalize();
+
 		//Check if we are within the radius
 		while (Vector3.Distance(transform.position, barnTransform.position) > radius)
 		{
@@ -65,7 +88,9 @@ public class Chicken : MonoBehaviour
 
 			yield return null;
 		}
-	}
+        chickenState = ChickenState.AttackBase;
+        AttackBarn(barnTransform.gameObject);
+    }
 
 	public void SetOwner(Player newPlayer)
 	{
