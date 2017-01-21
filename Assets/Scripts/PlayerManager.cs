@@ -86,16 +86,9 @@ public class PlayerManager : MonoBehaviour
         playerComponent.Barn = barn;
     }
 
-	void SendToBarn()
-	{
-		
-	}
-
 	// Update is called once per frame
 	void Update()
 	{
-        CheckForNewPlayers();
-
 		for (int i = 0; i < numberPlayers; i++)
 		{
             if (Players[i] == null) continue;
@@ -119,26 +112,5 @@ public class PlayerManager : MonoBehaviour
 				{ currentPlayer.SendToBarn(BlueBarn); }
 			}
 		}
-	}
-
-    void CheckForNewPlayers()
-    {
-        for (int i = 0; i < numberPlayers; i++)
-        {
-            if (Players[i] != null) continue;
-
-            x360_Gamepad pad = GamepadManager.Instance.GetGamepad(i + 1);
-            if (!pad.IsConnected) continue;
-            bool pressed = pad.GetButton("A");
-            if (pressed)
-            {
-                AddPlayer(i);
-            }
-        }
-    }
-
-	void OnGUI()
-	{
-
 	}
 }
