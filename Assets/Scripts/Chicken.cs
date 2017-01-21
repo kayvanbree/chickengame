@@ -111,7 +111,7 @@ public class Chicken : MonoBehaviour
         {
             if (!IsNearBarn(barn))
             {
-                GoToBarn(barn.gameObject);
+                GoToBarn(barn);
             }
         }
         else
@@ -127,13 +127,12 @@ public class Chicken : MonoBehaviour
         return Vector3.Distance(transform.position, barn.transform.position) <= radius;
     }
 
-	public void GoToBarn(GameObject gameObject)
+	public void GoToBarn(Barn barn)
 	{
-        Barn barn = gameObject.GetComponent<Barn>();
         if (barn != null && barn.State == BarnState.Alive)
         {
             // start coroutine of moving towards target
-            SwitchBehaviour(MoveTowardsBarn(gameObject.transform));
+            SwitchBehaviour(MoveTowardsBarn(barn.transform));
         }
     }
 

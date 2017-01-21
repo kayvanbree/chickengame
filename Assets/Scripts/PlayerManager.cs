@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class PlayerManager : MonoBehaviour
 {
 	public GameObject PlayerPrefab;
-	public GameObject GreenBarn;
-	public GameObject RedBarn;
-	public GameObject YellowBarn;
-	public GameObject BlueBarn;
+	public Barn GreenBarn;
+	public Barn RedBarn;
+	public Barn YellowBarn;
+	public Barn BlueBarn;
 
 	private GameObject[] Players;
 	private int[] buttonIndices = new int[24];

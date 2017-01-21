@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
 
 	public Color playerColor;
 
-	public GameObject barnPrefab;
+	public Barn barnPrefab;
 
 	private GameObject currentHitChicken = null;
 
@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
 		return false;
 	}
 
-	public void SendToBarn(GameObject playersBarn)
+	public void SendToBarn(Barn playersBarn)
 	{
 		if (currentHitChicken != null)
 		{
