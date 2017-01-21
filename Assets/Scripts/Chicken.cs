@@ -52,7 +52,7 @@ public class Chicken : MonoBehaviour
     IEnumerator Attack(Barn barn)
     {
         // Check if we are in correct state and radius
-        while (chickenState == ChickenState.AttackBase && IsNearBarn(barn))
+        while (chickenState == ChickenState.AttackBase && IsNearBarn(barn) && barn.State == BarnState.Alive)
         {
             barn.Attack(dps);
             yield return new WaitForSeconds(1f);
