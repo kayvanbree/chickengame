@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
-	public string Name = "PlayerNone";
 	public int playerIdx = -1;
 
 	public x360_Gamepad gamepad;
@@ -20,6 +20,14 @@ public class Player : MonoBehaviour
 
 	public int[] buttonIndices = new int[6];
 	public int currentButtonIndex = -1;
+
+	List<Collider> InRadius = new List<Collider>();
+
+	public Color playerColor;
+
+	public GameObject barnPrefab;
+
+	private GameObject currentHitChicken = null;
 
 	// Use this for initialization
 	void Start()
@@ -37,10 +45,7 @@ public class Player : MonoBehaviour
 	{
 		// reset index to -1, so we know that this player is not pressing any buttons
 		if (gamepad.GetButtonUp("A"))
-		{
-			//Debug.Log("a is released");
-			currentButtonIndex = -1;
-		}
+		{	currentButtonIndex = -1;}
 
 		if (gamepad.GetButtonUp("B"))
 			currentButtonIndex = -1;
@@ -53,47 +58,93 @@ public class Player : MonoBehaviour
 
 		if (gamepad.GetButtonDown("A"))
 		{
-			// play sound
-			if (!audioSource.isPlaying)
-			{	
-				audioSource.clip = clipButtonA;
-				audioSource.Play();
+			//if this is our chicken
+			if (IsMyChicken())
+			{
+				// play sound
+				if (!audioSource.isPlaying)
+				{
+					audioSource.clip = clipButtonA;
+					audioSource.Play();
+				}
+				// get the index for this button for this player and set it to the current button index
+				// this way we can check if this is the same as the one on the screen
+				currentButtonIndex = GetButtonIndex("A");
 			}
-			// get the index for this button for this player and set it to the current button index
-			// this way we can check if this is the same as the one on the screen
-			currentButtonIndex = GetButtonIndex("A");
 		}
 		if (gamepad.GetButtonDown("B"))
-		{
-			// play sound
-			if (!audioSource.isPlaying)
+		{			
+			//if this is our chicken
+			if (IsMyChicken())
 			{
-				audioSource.clip = clipButtonB;
-				audioSource.Play();
+				// play sound
+				if (!audioSource.isPlaying)
+				{
+					audioSource.clip = clipButtonB;
+					audioSource.Play();	
+				}
 				currentButtonIndex = GetButtonIndex("B");
 			}
 		}
 		if (gamepad.GetButtonDown("X"))
 		{
-			// play sound
-			if (!audioSource.isPlaying)
+			//if this is our chicken
+			if (IsMyChicken())
 			{
-				audioSource.clip = clipButtonX;
-				audioSource.Play();
+				// play sound
+				if (!audioSource.isPlaying)
+				{
+					audioSource.clip = clipButtonX;
+					audioSource.Play();
+				}
 				currentButtonIndex = GetButtonIndex("X");
 			}
 		}
 		if (gamepad.GetButtonDown("Y"))
 		{
-			// play sound
-			if (!audioSource.isPlaying)
+			//if this is our chicken
+			if (IsMyChicken())
 			{
-				audioSource.clip = clipButtonY;
-				audioSource.Play();
+				// play sound
+				if (!audioSource.isPlaying)
+				{
+					audioSource.clip = clipButtonY;
+					audioSource.Play();
+				}
 				currentButtonIndex = GetButtonIndex("Y");
 			}
 		}
-		if(gamepad.GetTriggerTap_L())
+		
+		if (gamepad.GetTriggerTap_R())
+		{
+			RaycastHit hit;
+			Vector3 fwd = transform.TransformDirection(Vector3.forward);
+			if (Physics.Raycast(transform.position, fwd, out hit, 3.0f))
+			{
+				if(hit.collider.tag == "Chicken")
+				{
+					// get the player to which this chicken belongs
+					Player ownedPlayer = hit.collider.gameObject.GetComponent<Chicken>().GetOwner();
+					// check if we dont already own this chicken
+					if(ownedPlayer != this)
+					{
+						// then set the new owner for this player (brainwash this chicken)
+						hit.collider.gameObject.GetComponent<Chicken>().SetOwner(this);
+
+						//marco, hier moet je de material van deze chicken ophalen, en de color setten van deze speler (playerColor)
+					}
+				}
+			}
+			// play sound
+			if (!audioSource.isPlaying)
+			{
+				audioSource.clip = clipTriggerRight;
+				audioSource.Play();
+			}
+			currentButtonIndex = GetButtonIndex("RT");
+		}
+
+		if (gamepad.GetTriggerTap_L())
 		{
 			// play sound
 			if (!audioSource.isPlaying)
@@ -101,17 +152,63 @@ public class Player : MonoBehaviour
 				audioSource.clip = clipTriggerLeft;
 				audioSource.Play();
 				currentButtonIndex = GetButtonIndex("LT");
+				// do explosion burst in radius
+				for(int i = 0; i < InRadius.Count; i++)
+				{
+					Vector3 direction = transform.position - InRadius[i].gameObject.transform.position;
+					direction.Normalize();
+					InRadius[i].attachedRigidbody.AddForce((-direction * 15.0f), ForceMode.Impulse);
+				}
 			}
 		}
-		if (gamepad.GetTriggerTap_R())
+	}
+
+	bool IsMyChicken()
+	{
+		RaycastHit hit;
+		Vector3 fwd = transform.TransformDirection(Vector3.forward);
+		if (Physics.Raycast(transform.position, fwd, out hit, 3.0f))
 		{
-			// play sound
-			if (!audioSource.isPlaying)
+			if (hit.collider.tag == "Chicken")
 			{
-				audioSource.clip = clipTriggerRight;
-				audioSource.Play();
-				currentButtonIndex = GetButtonIndex("RT");
+				// get the player to which this chicken belongs
+				Player ownedPlayer = hit.collider.gameObject.GetComponent<Chicken>().GetOwner();
+				// check if we dont already own this chicken
+				if (ownedPlayer == this)
+				{
+					// we need to store the current hit chicken, else we lose the data later from the hit, and we dont want to do a raycast again
+					currentHitChicken = hit.collider.gameObject;
+					return true;
+				}
 			}
+		}
+		return false;
+	}
+
+	public void SendToBarn(GameObject playersBarn)
+	{
+		if (currentHitChicken != null)
+		{
+			currentHitChicken.GetComponent<Chicken>().GoToBarn(playersBarn);
+			currentHitChicken = null;
+		}
+	}
+
+	void OnTriggerEnter(Collider other)
+	{	
+		if(other.tag == "Chicken" || other.tag == "Player0" || other.tag == "Player1" || other.tag == "Player2" || other.tag == "Player3")
+		{
+			if (!InRadius.Contains(other))
+			{ InRadius.Add(other); }
+		}
+	}
+
+	void OnTriggerExit(Collider other)
+	{
+		if (other.tag == "Chicken" || other.tag == "Player0" || other.tag == "Player1" || other.tag == "Player2" || other.tag == "Player3")
+		{
+			if (InRadius.Contains(other))
+			{ InRadius.Remove(other); }
 		}
 	}
 
@@ -131,12 +228,12 @@ public class Player : MonoBehaviour
 					index = buttonIndices[1];
 				}
 				break;
-			case "X":
+			case "Y":
 				{
 					index = buttonIndices[2];
 				}
 				break;
-			case "Y":
+			case "X":
 				{
 					index = buttonIndices[3];
 				}

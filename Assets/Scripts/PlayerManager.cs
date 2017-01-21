@@ -5,6 +5,10 @@ using System.Collections.Generic;
 public class PlayerManager : MonoBehaviour
 {
 	public GameObject PlayerPrefab;
+	public GameObject GreenBarn;
+	public GameObject RedBarn;
+	public GameObject YellowBarn;
+	public GameObject BlueBarn;
 
 	private List<GameObject> Players;
 	private int[] buttonIndices = new int[24];
@@ -34,12 +38,29 @@ public class PlayerManager : MonoBehaviour
 			for (int j = 0; j < 6; j++)
 				player.GetComponent<Player>().buttonIndices[j] = buttonIndices[i * 6 + j];
 
-			// set random player properties
-			player.GetComponent<Player>().Name = "Player" + i;
+			// set player tag
+			player.tag = "Player" + i;
 
 			// add to player list
 			Players.Add(player);
 		}
+
+		Players[0].GetComponent<Player>().playerColor = new Color(0, 1, 0); //green
+		Players[0].GetComponent<Player>().barnPrefab = GreenBarn;
+
+		Players[1].GetComponent<Player>().playerColor = new Color(1, 0, 0); //red
+		Players[1].GetComponent<Player>().barnPrefab = RedBarn;
+
+		Players[2].GetComponent<Player>().playerColor = new Color(1, 1, 0); //yellow
+		Players[2].GetComponent<Player>().barnPrefab = YellowBarn;
+
+		Players[3].GetComponent<Player>().playerColor = new Color(0, 0, 1); //blue
+		Players[3].GetComponent<Player>().barnPrefab = BlueBarn;
+	}
+
+	void SendToBarn()
+	{
+		
 	}
 
 	// Update is called once per frame
@@ -48,26 +69,25 @@ public class PlayerManager : MonoBehaviour
 		for (int i = 0; i < numberPlayers; i++)
 		{
 			Players[i].GetComponent<Player>().Update();
+		}
 
-			// check if there are any items left in the sequence
-			// if the button pressed for this specific player is equal to the sound in the list
-			/*if (Players[i].GetComponent<Player>().currentButtonIndex == some base of a player)
-                {
-                    Players[i].GetComponent<Player>().currentButtonIndex = -1;
-
-                    Debug.Log("player idx: " + Players[i].ToString() + "sound nr: " );
-                   
-                    // we know that that player pressed the correct button for that image
-                    ScreenImages.RemoveAt(0);
-                }
-                else if (Players[i].GetComponent<Player>().currentButtonIndex > -1)
-                {
-                    Players[i].GetComponent<Player>().currentButtonIndex = -1;
-                }
-            }*/
+		for(int i = 0; i < Players.Count; i++)
+		{
+			Player currentPlayer = Players[i].GetComponent<Player>();
+			//if a player pressed a button
+			if (currentPlayer.currentButtonIndex > -1)
+			{
+				if (currentPlayer.buttonIndices[0] == currentPlayer.currentButtonIndex) //button A
+				{ currentPlayer.SendToBarn(GreenBarn); }
+				else if (currentPlayer.buttonIndices[1] == currentPlayer.currentButtonIndex) // button B
+				{ currentPlayer.SendToBarn(RedBarn); }
+				else if (currentPlayer.buttonIndices[2] == currentPlayer.currentButtonIndex) // button Y
+				{ currentPlayer.SendToBarn(YellowBarn); }
+				else if (currentPlayer.buttonIndices[3] == currentPlayer.currentButtonIndex) // button X
+				{ currentPlayer.SendToBarn(BlueBarn); }
+			}
 		}
 	}
-
 
 	void OnGUI()
 	{
