@@ -18,6 +18,11 @@ public class Barn : MonoBehaviour
         NumberStates
     }
 
+    void Start()
+    {
+        HealthBar.color = Color.Lerp(Color.red, Color.green, hp / maxHp);
+    }
+
 	public void Attack(float damage)
     {
         if (State == BarnState.Dead) return;
@@ -29,5 +34,6 @@ public class Barn : MonoBehaviour
             State = BarnState.Dead;
         }
         HealthBar.fillAmount = (float)hp / (float)maxHp;
+        HealthBar.color = Color.Lerp(Color.red, Color.green, hp / maxHp);
     }
 }
