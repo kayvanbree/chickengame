@@ -33,7 +33,7 @@ public class PlayerManager : MonoBehaviour
     void AddPlayer(int index)
     {
         // instantiate player on position (later use to spawn at real pos)
-        GameObject player = Instantiate(PlayerPrefab, new Vector3(0.0f, 0.0f, 0.0f), PlayerPrefab.transform.rotation) as GameObject;
+        GameObject player = Instantiate(PlayerPrefab, new Vector3(0.0f, 2.0f, 0.0f), PlayerPrefab.transform.rotation) as GameObject;
 
         player.GetComponent<Player>().gamepad = GamepadManager.Instance.GetGamepad(index + 1);
 

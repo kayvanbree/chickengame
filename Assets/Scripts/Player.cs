@@ -34,7 +34,11 @@ public class Player : MonoBehaviour
 
 	public Color playerColor;
 
-    private Barn barn;
+	private GameObject brainwaveclone;
+	public GameObject BrainWavePrefab;
+	public GameObject SmokeBlastParticlePrefab;
+
+	private Barn barn;
 	public Barn Barn
     {
         get
@@ -147,7 +151,7 @@ public class Player : MonoBehaviour
 		{
 			RaycastHit hit;
 			Vector3 fwd = transform.TransformDirection(Vector3.forward);
-			if (Physics.Raycast(transform.position, fwd, out hit, 3.0f))
+			if (Physics.Raycast(transform.position, fwd, out hit, 5.0f))
 			{
 				if(hit.collider.tag == "Chicken")
 				{
@@ -156,6 +160,11 @@ public class Player : MonoBehaviour
 					// check if we dont already own this chicken
 					if(ownedPlayer != this)
 					{
+						currentHitChicken = hit.collider.gameObject;
+						//Send out beam
+						brainwaveclone = Instantiate(BrainWavePrefab, transform.position, transform.rotation);
+						
+
 						// then set the new owner for this player (brainwash this chicken)
 						hit.collider.gameObject.GetComponent<Chicken>().SetOwner(this);
 
@@ -180,6 +189,12 @@ public class Player : MonoBehaviour
 			currentButtonIndex = GetButtonIndex("RT");
 		}
 
+		if (brainwaveclone != null && currentHitChicken != null)
+		{
+			brainwaveclone.GetComponent<LineRenderer>().SetPosition(0, transform.position);
+			brainwaveclone.GetComponent<LineRenderer>().SetPosition(1, currentHitChicken.transform.position);
+		}
+
 		if (gamepad.GetTriggerTap_L())
 		{
 			// play sound
@@ -188,8 +203,10 @@ public class Player : MonoBehaviour
 				audioSource.clip = clipTriggerLeft;
 				audioSource.Play();
 				currentButtonIndex = GetButtonIndex("LT");
+				
+				Instantiate(SmokeBlastParticlePrefab, transform.position, transform.rotation);
 				// do explosion burst in radius
-				for(int i = 0; i < InRadius.Count; i++)
+				for (int i = 0; i < InRadius.Count; i++)
 				{
 					Vector3 direction = transform.position - InRadius[i].gameObject.transform.position;
 					direction.Normalize();
