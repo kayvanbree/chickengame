@@ -37,7 +37,7 @@ public class PlayerManager : MonoBehaviour
 
         player.GetComponent<Player>().gamepad = GamepadManager.Instance.GetGamepad(index + 1);
 
-        player.GetComponent<Player>().playerIdx = index;
+        player.GetComponent<Player>().playerIndex = index;
 
         player.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().playerIdx = (index + 1);
 
@@ -56,32 +56,35 @@ public class PlayerManager : MonoBehaviour
         {
             case 0:
             {
-                Players[0].GetComponent<Player>().playerColor = new Color(0, 1, 0); //green
-                Players[0].GetComponent<Player>().barnPrefab = GreenBarn;
+                InitializePlayerComponent(0, new Color(0, 1, 0), GreenBarn);
                 break;
             }
             case 1:
             {
-                Players[1].GetComponent<Player>().playerColor = new Color(1, 0, 0); //red
-                Players[1].GetComponent<Player>().barnPrefab = RedBarn;
+                InitializePlayerComponent(1, new Color(1, 0, 0), RedBarn);
                 break;
             }
             case 2:
             {
-                Players[2].GetComponent<Player>().playerColor = new Color(1, 1, 0); //yellow
-                Players[2].GetComponent<Player>().barnPrefab = YellowBarn;
+                InitializePlayerComponent(2, new Color(1, 1, 0), YellowBarn);
                 break;
             }
             case 3:
             {
-                Players[3].GetComponent<Player>().playerColor = new Color(0, 0, 1); //blue
-                Players[3].GetComponent<Player>().barnPrefab = BlueBarn;
+                InitializePlayerComponent(3, new Color(0, 0, 1), BlueBarn);
                 break;
             }
         }
     }
 
-    
+    void InitializePlayerComponent(int index, Color color, Barn barn)
+    {
+        if (index > numberPlayers) return;
+
+        Player playerComponent = Players[index].GetComponent<Player>();
+        playerComponent.playerColor = color;
+        playerComponent.Barn = barn;
+    }
 
 	void SendToBarn()
 	{

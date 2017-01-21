@@ -14,6 +14,10 @@ public enum BarnState
 
 public class Barn : MonoBehaviour
 {
+    // Delegate gets called when the barn is destroyed
+    public delegate void BarnDestroyed();
+    public BarnDestroyed barnDestroyed;
+
     public float maxHp = 100;
     public float hp = 100;
 
@@ -34,6 +38,7 @@ public class Barn : MonoBehaviour
         {
             hp = 0;
             State = BarnState.Dead;
+            barnDestroyed();
         }
         HealthBar.fillAmount = (float)hp / (float)maxHp;
         HealthBar.color = Color.Lerp(Color.red, Color.green, hp / maxHp);

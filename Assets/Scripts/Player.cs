@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
-	public int playerIdx = -1;
+	public int playerIndex = -1;
 
 	public x360_Gamepad gamepad;
 
@@ -27,7 +27,19 @@ public class Player : MonoBehaviour
 
 	public Color playerColor;
 
-	public Barn barnPrefab;
+    private Barn barn;
+	public Barn Barn
+    {
+        get
+        {
+            return barn;
+        }
+        set
+        {
+            barn = value;
+            barn.barnDestroyed += GameOver;
+        }
+    }
 
 	private GameObject currentHitChicken = null;
 
@@ -36,6 +48,11 @@ public class Player : MonoBehaviour
 	{
 		audioSource = GetComponent<AudioSource>();
 	}
+
+    public void GameOver()
+    {
+        Debug.Log("Game over for player " + playerIndex);
+    }
 
 	// Update is called once per frame
 	public void Update()
