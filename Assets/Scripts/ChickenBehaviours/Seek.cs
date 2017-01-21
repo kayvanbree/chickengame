@@ -17,13 +17,8 @@ public class Seek : ChickenBehaviour
     /// Return the force we need to move to the target
     /// </summary>
     /// <returns></returns>
-    public override Vector3 GetForce(GameObject target)
+    public override Vector3 GetTargetPosition(GameObject target)
     {
-        Vector3 desiredVelocity = target.transform.position - Chicken.transform.position;
-        if(desiredVelocity != Vector3.zero)
-            desiredVelocity.Normalize();
-        desiredVelocity *= Chicken.maxSpeed;
-
-        return desiredVelocity - Chicken.Velocity;
+        return target.transform.position;
     }
 }

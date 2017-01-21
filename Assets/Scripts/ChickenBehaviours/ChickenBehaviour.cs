@@ -14,5 +14,5 @@ public abstract class ChickenBehaviour
     /// <summary>
     /// Updates the movement of the chicken
     /// </summary>
-    public abstract Vector3 GetForce(GameObject target);
+    public abstract Vector3 GetTargetPosition(GameObject target);
 }
