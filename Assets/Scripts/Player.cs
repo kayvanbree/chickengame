@@ -21,7 +21,9 @@ public class Player : MonoBehaviour
 	public int[] buttonIndices = new int[6];
 	public int currentButtonIndex = -1;
 
-	List<Collider> InRadius = new List<Collider>();
+    public float force = 15f;
+
+    List<Collider> InRadius = new List<Collider>();
 
 	public Color playerColor;
 
@@ -166,7 +168,7 @@ public class Player : MonoBehaviour
 					Vector3 direction = transform.position - InRadius[i].gameObject.transform.position;
 					direction.Normalize();
                     direction.y = 0;
-                    InRadius[i].attachedRigidbody.AddForce((-direction * 15.0f), ForceMode.Impulse);
+                    InRadius[i].attachedRigidbody.AddForce((-direction * force), ForceMode.Impulse);
 				}
 			}
 		}
