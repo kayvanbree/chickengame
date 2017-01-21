@@ -131,7 +131,15 @@ public class Player : MonoBehaviour
 						// then set the new owner for this player (brainwash this chicken)
 						hit.collider.gameObject.GetComponent<Chicken>().SetOwner(this);
 
-						//marco, hier moet je de material van deze chicken ophalen, en de color setten van deze speler (playerColor)
+						for(int i =0; i < hit.collider.gameObject.GetComponentInChildren<Renderer>().materials.Length; i++)
+						{
+							if(hit.collider.gameObject.GetComponentInChildren<Renderer>().materials[i].name == "Mat_PlayerOwner (Instance)")
+							{
+								Material mat = hit.collider.gameObject.GetComponentInChildren<Renderer>().materials[i];
+								mat.SetColor("_Color", playerColor);
+								hit.collider.gameObject.GetComponentInChildren<Renderer>().materials[i] = mat;
+							}
+						}
 					}
 				}
 			}
