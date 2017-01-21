@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum BarnState
+{
+    Alive,
+    Dead,
+    NumberStates
+}
+
 public class Barn : MonoBehaviour
 {
     public float maxHp = 100;
@@ -10,13 +17,6 @@ public class Barn : MonoBehaviour
 
     public BarnState State = BarnState.Alive;
     public Image HealthBar;
-
-    public enum BarnState
-    {
-        Alive,
-        Dead,
-        NumberStates
-    }
 
     void Start()
     {

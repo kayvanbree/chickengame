@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// I stole this script from the internet. Yaaaar!
+/// </summary>
 public class CameraFacingBillboard : MonoBehaviour
 {
     public Camera m_Camera;
