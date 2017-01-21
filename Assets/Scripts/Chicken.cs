@@ -57,10 +57,18 @@ public class Chicken : MonoBehaviour
             barn.Attack(dps);
             yield return new WaitForSeconds(1f);
         }
-        if (!IsNearBarn(barn))
+        if (barn.State == BarnState.Alive)
         {
-            GoToBarn(barn.gameObject);
+            if (!IsNearBarn(barn))
+            {
+                GoToBarn(barn.gameObject);
+            }
         }
+        else
+        {
+            chickenState = ChickenState.Idle;
+        }
+        
     }
 
     private bool IsNearBarn(Barn barn)
