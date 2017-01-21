@@ -37,14 +37,23 @@ public class Chicken : MonoBehaviour
 	}
 
     public ChickenState chickenState = ChickenState.Idle;
+    IEnumerator chickenBehaviour;
 
 	void Start ()
     {
         Velocity = Vector3.zero;
         //Target = null;
         wanderTarget = GetRandomWanderTarget();
-        StartCoroutine(Idle());
+        SwitchBehaviour(Idle());
 	}
+
+    void SwitchBehaviour(IEnumerator coroutine)
+    {
+        if (chickenBehaviour != null) 
+            StopCoroutine(chickenBehaviour);
+        chickenBehaviour = coroutine;
+        StartCoroutine(chickenBehaviour);
+    }
 	
 	void Update ()
     {
@@ -84,8 +93,7 @@ public class Chicken : MonoBehaviour
         Barn barn = gameObject.GetComponent<Barn>();
         if(barn != null)
         {
-            StartCoroutine(Attack(barn));
-            StopCoroutine(Attack(barn));
+            SwitchBehaviour(Attack(barn));
         } 
     }
 
@@ -125,9 +133,7 @@ public class Chicken : MonoBehaviour
         if (barn != null && barn.State == BarnState.Alive)
         {
             // start coroutine of moving towards target
-            StopCoroutine(MoveTowardsBarn(barn.transform));
-            StartCoroutine(MoveTowardsBarn(barn.transform));
-            StopCoroutine(MoveTowardsBarn(barn.transform));
+            SwitchBehaviour(MoveTowardsBarn(gameObject.transform));
         }
     }
 
