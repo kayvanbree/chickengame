@@ -10,27 +10,25 @@ public class PlayerManager : MonoBehaviour
 	public Barn YellowBarn;
 	public Barn BlueBarn;
 
-	private GameObject[] Players;
-	private int[] buttonIndices = new int[24];
-	private int numberPlayers = -1;
+	private GameObject[] Players = new GameObject[4];
+    private int[] buttonIndices = new int[24];
+    private int numberPlayers =  4;
+    private int numberButtons = 6;
 
 	// Use this for initialization
 	void Start()
 	{
-		numberPlayers = GamepadManager.Instance.GamepadCount;
-		for (int i = 0; i < 24; i++)
+		for (int i = 0; i < numberPlayers * numberButtons; i++)
 		{
 			buttonIndices[i] = i;
 		}
-
-        Players = new GameObject[numberPlayers];
 	}
 
     /// <summary>
     /// Adds a player to the game on the given index
     /// </summary>
     /// <param name="index"></param>
-    void AddPlayer(int index)
+    public void AddPlayer(int index)
     {
         // instantiate player on position (later use to spawn at real pos)
         GameObject player = Instantiate(PlayerPrefab, new Vector3(0.0f, 2.0f, 0.0f), PlayerPrefab.transform.rotation) as GameObject;

@@ -7,7 +7,7 @@ public class MenuInputHandler : MonoBehaviour
     int numberPlayers = 4;
     Lobby Lobby;
 
-    void Awake()
+    void Start()
     {
         Lobby = FindObjectOfType<Lobby>();
     }

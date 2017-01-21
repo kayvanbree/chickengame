@@ -8,6 +8,26 @@ public class Lobby : MonoBehaviour
     public List<PlayerEntry> Players = new List<PlayerEntry>(4);
     private int numberPlayers = 0;
 
+    private PlayerManager PlayerManager;
+
+    void OnLevelWasLoaded()
+    {
+        PlayerManager = FindObjectOfType<PlayerManager>();
+        if (PlayerManager != null)
+            LoadPlayers();
+    }
+
+    void LoadPlayers()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            if (Players[i].IsActive())
+            {
+                PlayerManager.AddPlayer(i);
+            }
+        }
+    }
+
     public bool IsPlayerActive(int index)
     {
         return Players[index].IsActive();
