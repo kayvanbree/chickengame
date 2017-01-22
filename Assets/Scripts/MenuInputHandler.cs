@@ -33,7 +33,7 @@ public class MenuInputHandler : MonoBehaviour
         {
             x360_Gamepad pad = GamepadManager.Instance.GetGamepad(i + 1);
             if (!pad.IsConnected) continue;
-            bool pressed = pad.GetButtonDown("Start");
+            bool pressed = pad.GetButton("Start");
             if (pressed)
             {
                 Lobby.StartGame();
