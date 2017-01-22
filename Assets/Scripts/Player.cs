@@ -115,6 +115,7 @@ public class Player : MonoBehaviour
 				break;
 		}
 
+		this.GetComponentInChildren<Renderer>().material.SetColor("_Color", playerColor);
 	}
 
     public void GameOver()

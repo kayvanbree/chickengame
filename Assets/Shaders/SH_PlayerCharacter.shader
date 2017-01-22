@@ -3,11 +3,13 @@
 // Shader created with Shader Forge v1.30 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.30;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,lico:1,lgpr:1,limd:1,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False;n:type:ShaderForge.SFN_Final,id:4013,x:32719,y:32712,varname:node_4013,prsc:2|diff-8784-RGB,spec-2300-OUT;n:type:ShaderForge.SFN_Tex2d,id:8784,x:31925,y:32564,ptovrint:False,ptlb:Color,ptin:_Color,varname:node_8784,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:2803a80bd6d95e04eb2fbcec3fa36f46,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector1,id:2300,x:32488,y:32903,varname:node_2300,prsc:2,v1:0;n:type:ShaderForge.SFN_Lerp,id:7369,x:32398,y:32621,varname:node_7369,prsc:2|A-8784-RGB,B-3134-OUT,T-4290-R;n:type:ShaderForge.SFN_Tex2d,id:4290,x:31994,y:32893,ptovrint:False,ptlb:node_4290,ptin:_node_4290,varname:node_4290,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:9e13176fa74a2b143aa5d07451f75c18,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:3134,x:32150,y:32701,varname:node_3134,prsc:2|A-8784-RGB,B-5185-RGB;n:type:ShaderForge.SFN_Color,id:5185,x:31864,y:32766,ptovrint:False,ptlb:node_5185,ptin:_node_5185,varname:node_5185,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0.5,c2:0.5,c3:0.5,c4:1;proporder:8784;pass:END;sub:END;*/
+/*SF_DATA;ver:1.30;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,lico:1,lgpr:1,limd:1,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False;n:type:ShaderForge.SFN_Final,id:4013,x:32719,y:32712,varname:node_4013,prsc:2|diff-7369-OUT,spec-2300-OUT;n:type:ShaderForge.SFN_Tex2d,id:8784,x:31889,y:32525,ptovrint:False,ptlb:fggf,ptin:_fggf,varname:node_8784,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:2803a80bd6d95e04eb2fbcec3fa36f46,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector1,id:2300,x:32488,y:32903,varname:node_2300,prsc:2,v1:0;n:type:ShaderForge.SFN_Lerp,id:7369,x:32371,y:32726,varname:node_7369,prsc:2|A-8784-RGB,B-3134-OUT,T-4290-R;n:type:ShaderForge.SFN_Tex2d,id:4290,x:31994,y:32893,ptovrint:False,ptlb:node_4290,ptin:_node_4290,varname:node_4290,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:9e13176fa74a2b143aa5d07451f75c18,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:3134,x:32115,y:32673,varname:node_3134,prsc:2|A-8784-RGB,B-2683-RGB;n:type:ShaderForge.SFN_Color,id:2683,x:31805,y:32747,ptovrint:False,ptlb:Color,ptin:_Color,varname:node_2683,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0.5,c2:0.5,c3:0.5,c4:1;proporder:8784-4290-2683;pass:END;sub:END;*/
 
 Shader "Shader Forge/SH_PlayerCharacter" {
     Properties {
-        _Color ("Color", 2D) = "white" {}
+        _fggf ("fggf", 2D) = "white" {}
+        _node_4290 ("node_4290", 2D) = "white" {}
+        _Color ("Color", Color) = (0.5,0.5,0.5,1)
     }
     SubShader {
         Tags {
@@ -31,7 +33,9 @@ Shader "Shader Forge/SH_PlayerCharacter" {
             #pragma exclude_renderers gles3 metal d3d11_9x xbox360 xboxone ps3 ps4 psp2 
             #pragma target 3.0
             uniform float4 _LightColor0;
-            uniform sampler2D _Color; uniform float4 _Color_ST;
+            uniform sampler2D _fggf; uniform float4 _fggf_ST;
+            uniform sampler2D _node_4290; uniform float4 _node_4290_ST;
+            uniform float4 _Color;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -80,8 +84,9 @@ Shader "Shader Forge/SH_PlayerCharacter" {
                 float3 directDiffuse = max( 0.0, NdotL) * attenColor;
                 float3 indirectDiffuse = float3(0,0,0);
                 indirectDiffuse += UNITY_LIGHTMODEL_AMBIENT.rgb; // Ambient Light
-                float4 _Color_var = tex2D(_Color,TRANSFORM_TEX(i.uv0, _Color));
-                float3 diffuseColor = _Color_var.rgb;
+                float4 _fggf_var = tex2D(_fggf,TRANSFORM_TEX(i.uv0, _fggf));
+                float4 _node_4290_var = tex2D(_node_4290,TRANSFORM_TEX(i.uv0, _node_4290));
+                float3 diffuseColor = lerp(_fggf_var.rgb,(_fggf_var.rgb*_Color.rgb),_node_4290_var.r);
                 float3 diffuse = (directDiffuse + indirectDiffuse) * diffuseColor;
 /// Final Color:
                 float3 finalColor = diffuse + specular;
@@ -110,7 +115,9 @@ Shader "Shader Forge/SH_PlayerCharacter" {
             #pragma exclude_renderers gles3 metal d3d11_9x xbox360 xboxone ps3 ps4 psp2 
             #pragma target 3.0
             uniform float4 _LightColor0;
-            uniform sampler2D _Color; uniform float4 _Color_ST;
+            uniform sampler2D _fggf; uniform float4 _fggf_ST;
+            uniform sampler2D _node_4290; uniform float4 _node_4290_ST;
+            uniform float4 _Color;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -157,8 +164,9 @@ Shader "Shader Forge/SH_PlayerCharacter" {
 /////// Diffuse:
                 NdotL = max(0.0,dot( normalDirection, lightDirection ));
                 float3 directDiffuse = max( 0.0, NdotL) * attenColor;
-                float4 _Color_var = tex2D(_Color,TRANSFORM_TEX(i.uv0, _Color));
-                float3 diffuseColor = _Color_var.rgb;
+                float4 _fggf_var = tex2D(_fggf,TRANSFORM_TEX(i.uv0, _fggf));
+                float4 _node_4290_var = tex2D(_node_4290,TRANSFORM_TEX(i.uv0, _node_4290));
+                float3 diffuseColor = lerp(_fggf_var.rgb,(_fggf_var.rgb*_Color.rgb),_node_4290_var.r);
                 float3 diffuse = directDiffuse * diffuseColor;
 /// Final Color:
                 float3 finalColor = diffuse + specular;
