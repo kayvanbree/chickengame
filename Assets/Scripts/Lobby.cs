@@ -14,7 +14,10 @@ public class Lobby : MonoBehaviour
     {
         PlayerManager = FindObjectOfType<PlayerManager>();
         if (PlayerManager != null)
+        {
+            PlayerManager.SetButtonIndices();
             LoadPlayers();
+        }   
     }
 
     void LoadPlayers()

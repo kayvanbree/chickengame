@@ -42,8 +42,6 @@ public class Chicken : MonoBehaviour
 	void Start ()
     {
         Velocity = Vector3.zero;
-        //Target = null;
-        wanderTarget = GetRandomWanderTarget();
         SwitchBehaviour(Idle());
 	}
 
@@ -94,6 +92,7 @@ public class Chicken : MonoBehaviour
         if(barn != null)
         {
             SwitchBehaviour(Attack(barn));
+            chickenState = ChickenState.AttackBase;
         } 
     }
 
@@ -133,6 +132,7 @@ public class Chicken : MonoBehaviour
         {
             // start coroutine of moving towards target
             SwitchBehaviour(MoveTowardsBarn(barn.transform));
+            chickenState = ChickenState.GoToBase;
         }
     }
 
