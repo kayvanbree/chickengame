@@ -193,6 +193,7 @@ public class Player : MonoBehaviour
 		{
 			brainwaveclone.GetComponent<LineRenderer>().SetPosition(0, transform.position);
 			brainwaveclone.GetComponent<LineRenderer>().SetPosition(1, currentHitChicken.transform.position);
+			brainwaveclone.GetComponent<LineRenderer>().material.SetColor("_Color", playerColor);
 		}
 
 		if (gamepad.GetTriggerTap_L())

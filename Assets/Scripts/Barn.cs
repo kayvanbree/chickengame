@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public enum BarnState
 {
     Alive,
@@ -24,10 +22,22 @@ public class Barn : MonoBehaviour
     public BarnState State = BarnState.Alive;
     public Image HealthBar;
 
-    void Start()
+	public ParticleSystem SmokeParticle;
+	public ParticleSystem FireParticle1;
+	public ParticleSystem FireParticle2;
+	public ParticleSystem FireParticle3;
+	public ParticleSystem FireParticle4;
+
+	void Start()
     {
         HealthBar.color = Color.Lerp(Color.red, Color.green, hp / maxHp);
-    }
+
+		SmokeParticle.Stop();
+		FireParticle1.Stop();
+		FireParticle2.Stop();
+		FireParticle3.Stop();
+		FireParticle4.Stop();
+	}
 
 	public void Attack(float damage)
     {
@@ -45,5 +55,31 @@ public class Barn : MonoBehaviour
         }
         HealthBar.fillAmount = (float)hp / (float)maxHp;
         HealthBar.color = Color.Lerp(Color.red, Color.green, hp / maxHp);
-    }
+
+		if (hp < 50)
+		{
+			if (!SmokeParticle.isPlaying)
+				SmokeParticle.Play();
+		}
+		if (hp < 40)
+		{
+			if (!FireParticle1.isPlaying)
+				FireParticle1.Play();
+		}
+		if (hp < 30)
+		{
+			if (!FireParticle2.isPlaying)
+				FireParticle2.Play();
+		}
+		if (hp < 20)
+		{
+			if (!FireParticle3.isPlaying)
+				FireParticle3.Play();
+		}
+		if (hp < 10)
+		{
+			if (!FireParticle4.isPlaying)
+				FireParticle4.Play();
+		}
+	}
 }

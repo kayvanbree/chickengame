@@ -11,24 +11,31 @@ public class PlayerManager : MonoBehaviour
 	public Barn BlueBarn;
 
 	private GameObject[] Players;
-    private int[] buttonIndices = new int[24];
-    private int numberPlayers =  4;
-    private int numberButtons = 6;
+	private int[] buttonIndices = new int[24];
+	private int numberPlayers = -1;
 
-    public void SetButtonIndices()
-    {
-        for (int i = 0; i < 24; i++)
-        {
-            buttonIndices[i] = i;
-        }
+	// Use this for initialization
+	void Start()
+	{
+		numberPlayers = GamepadManager.Instance.GamepadCount;
+		for (int i = 0; i < 24; i++)
+		{
+			buttonIndices[i] = i;
+		}
+
         Players = new GameObject[numberPlayers];
-    }
+
+		GreenBarn.gameObject.SetActive(false);
+		RedBarn.gameObject.SetActive(false);
+		YellowBarn.gameObject.SetActive(false);
+		BlueBarn.gameObject.SetActive(false);
+	}
 
     /// <summary>
     /// Adds a player to the game on the given index
     /// </summary>
     /// <param name="index"></param>
-    public void AddPlayer(int index)
+    void AddPlayer(int index)
     {
         // instantiate player on position (later use to spawn at real pos)
         GameObject player = Instantiate(PlayerPrefab, new Vector3(0.0f, 2.0f, 0.0f), PlayerPrefab.transform.rotation) as GameObject;
@@ -54,22 +61,26 @@ public class PlayerManager : MonoBehaviour
         {
             case 0:
             {
-                InitializePlayerComponent(0, new Color(0, 1, 0), GreenBarn);
+				GreenBarn.gameObject.SetActive(true);
+				InitializePlayerComponent(0, new Color(0, 1, 0), GreenBarn);
                 break;
             }
             case 1:
             {
-                InitializePlayerComponent(1, new Color(1, 0, 0), RedBarn);
+				RedBarn.gameObject.SetActive(true);
+				InitializePlayerComponent(1, new Color(1, 0, 0), RedBarn);
                 break;
             }
             case 2:
             {
-                InitializePlayerComponent(2, new Color(1, 1, 0), YellowBarn);
+				YellowBarn.gameObject.SetActive(true);
+				InitializePlayerComponent(2, new Color(1, 1, 0), YellowBarn);
                 break;
             }
             case 3:
             {
-                InitializePlayerComponent(3, new Color(0, 0, 1), BlueBarn);
+				BlueBarn.gameObject.SetActive(true);
+				InitializePlayerComponent(3, new Color(0, 0, 1), BlueBarn);
                 break;
             }
         }
@@ -84,9 +95,16 @@ public class PlayerManager : MonoBehaviour
         playerComponent.Barn = barn;
     }
 
+	void SendToBarn()
+	{
+		
+	}
+
 	// Update is called once per frame
 	void Update()
 	{
+        CheckForNewPlayers();
+
 		for (int i = 0; i < numberPlayers; i++)
 		{
             if (Players[i] == null) continue;
@@ -110,5 +128,26 @@ public class PlayerManager : MonoBehaviour
 				{ currentPlayer.SendToBarn(BlueBarn); }
 			}
 		}
+	}
+
+    void CheckForNewPlayers()
+    {
+        for (int i = 0; i < numberPlayers; i++)
+        {
+            if (Players[i] != null) continue;
+
+            x360_Gamepad pad = GamepadManager.Instance.GetGamepad(i + 1);
+            if (!pad.IsConnected) continue;
+            bool pressed = pad.GetButton("A");
+            if (pressed)
+            {
+                AddPlayer(i);
+            }
+        }
+    }
+
+	void OnGUI()
+	{
+
 	}
 }
