@@ -8,6 +8,7 @@ public class GameoverMenuHandler : MonoBehaviour
 {
     GameStateManager GameStateManager;
     Lobby Lobby;
+    public GameObject background;
 
     public Sprite GreenWon;
     public Sprite RedWon;
@@ -55,6 +56,7 @@ public class GameoverMenuHandler : MonoBehaviour
             {
                 Destroy(Lobby.gameObject);
                 Destroy(GameStateManager.gameObject);
+                DontDestroyOnLoad(background);
                 SceneManager.LoadScene("MainMenu");
                 return;
             }

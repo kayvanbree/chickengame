@@ -6,10 +6,16 @@ public class MenuInputHandler : MonoBehaviour
 {
     int numberPlayers = 4;
     Lobby Lobby;
+    public GameObject background;
 
     void Start()
     {
         Lobby = FindObjectOfType<Lobby>();
+
+        if(FindObjectsOfType<MenuBackground>().Length > 1)
+        {
+            Destroy(background);
+        } 
     }
 
     void Update()

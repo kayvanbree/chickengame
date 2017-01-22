@@ -48,7 +48,12 @@ public class Lobby : MonoBehaviour
     public void StartGame()
     {
         if(readyToStart)
+        {
+            GameObject background = FindObjectOfType<MenuBackground>().gameObject;
+            Destroy(background);
             SceneManager.LoadScene("Game");
+        }
+            
     }
 
     public void AddPlayer(int index)
