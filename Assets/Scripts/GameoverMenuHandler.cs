@@ -5,6 +5,35 @@ using UnityEngine.SceneManagement;
 
 public class GameoverMenuHandler : MonoBehaviour
 {
+    GameStateManager GameStateManager;
+
+    public Sprite GreenWon;
+    public Sprite RedWon;
+    public Sprite YellowWon;
+    public Sprite BlueWon;
+
+    void Start()
+    {
+        GameStateManager = FindObjectOfType<GameStateManager>();
+
+        // Swap panel for correct one
+        switch (GameStateManager.Winner.playerIndex)
+        {
+            case 0:
+                Debug.Log("Green won");
+                break;
+            case 1:
+                Debug.Log("Red won");
+                break;
+            case 2:
+                Debug.Log("Yellow won");
+                break;
+            case 3:
+                Debug.Log("Blue won");
+                break;
+        }
+    }
+
     void Update()
     {
         CheckForStartPressed();

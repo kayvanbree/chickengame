@@ -2,10 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum PlayerState
+{
+    Playing,
+    GameOver
+}
+
 [RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
-	public int playerIndex = -1;
+    // Delegate gets called when the barn is destroyed
+    public delegate void PlayerDied();
+    public PlayerDied playerDied;
+
+    public int playerIndex = -1;
 
 	public x360_Gamepad gamepad;
 
@@ -25,12 +35,7 @@ public class Player : MonoBehaviour
 
     List<Collider> InRadius = new List<Collider>();
 
-    enum PlayerState
-    {
-        Playing,
-        GameOver
-    }
-    PlayerState State = PlayerState.Playing;
+    public PlayerState State = PlayerState.Playing;
 
 	public Color playerColor;
 
@@ -63,6 +68,8 @@ public class Player : MonoBehaviour
     public void GameOver()
     {
         gameObject.SetActive(false);
+        State = PlayerState.GameOver;
+        playerDied();
         Debug.Log("Game over for player " + playerIndex);
     }
 

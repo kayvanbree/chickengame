@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PlayerManager : MonoBehaviour
 	private GameObject[] Players;
 	private int[] buttonIndices = new int[24];
 	private int numberPlayers = -1;
+
+    GameStateManager GameStateManager;
 
 	// Use this for initialization
 	public void SetButtonIndices()
@@ -29,6 +32,8 @@ public class PlayerManager : MonoBehaviour
         RedBarn.gameObject.SetActive(false);
         YellowBarn.gameObject.SetActive(false);
         BlueBarn.gameObject.SetActive(false);
+
+        GameStateManager = FindObjectOfType<GameStateManager>();
     }
 
     /// <summary>
@@ -93,12 +98,8 @@ public class PlayerManager : MonoBehaviour
         Player playerComponent = Players[index].GetComponent<Player>();
         playerComponent.playerColor = color;
         playerComponent.Barn = barn;
+        playerComponent.playerDied += CheckGameOver;
     }
-
-	void SendToBarn()
-	{
-		
-	}
 
 	// Update is called once per frame
 	void Update()
@@ -130,6 +131,25 @@ public class PlayerManager : MonoBehaviour
 		}
 	}
 
+    void CheckGameOver()
+    {
+        int playersAlive = 0;
+        Player lastPlayerFound = null;
+        for (int i = 0; i < 4; i++)
+        {
+            if (Players[i] != null && Players[i].GetComponent<Player>().State == PlayerState.Playing)
+            {
+                playersAlive++;
+                lastPlayerFound = Players[i].GetComponent<Player>();
+            }
+        } 
+        if(lastPlayerFound != null && playersAlive == 1)
+        {
+            GameStateManager.Winner = lastPlayerFound;
+            GameStateManager.EndGame();
+        }
+    }
+
     void CheckForNewPlayers()
     {
         for (int i = 0; i < numberPlayers; i++)
@@ -145,9 +165,4 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
-
-	void OnGUI()
-	{
-
-	}
 }
