@@ -24,6 +24,11 @@ public class PlayerManager : MonoBehaviour
 		}
 
         Players = new GameObject[numberPlayers];
+
+		GreenBarn.gameObject.SetActive(false);
+		RedBarn.gameObject.SetActive(false);
+		YellowBarn.gameObject.SetActive(false);
+		BlueBarn.gameObject.SetActive(false);
 	}
 
     /// <summary>
@@ -56,22 +61,26 @@ public class PlayerManager : MonoBehaviour
         {
             case 0:
             {
-                InitializePlayerComponent(0, new Color(0, 1, 0), GreenBarn);
+				GreenBarn.gameObject.SetActive(true);
+				InitializePlayerComponent(0, new Color(0, 1, 0), GreenBarn);
                 break;
             }
             case 1:
             {
-                InitializePlayerComponent(1, new Color(1, 0, 0), RedBarn);
+				RedBarn.gameObject.SetActive(true);
+				InitializePlayerComponent(1, new Color(1, 0, 0), RedBarn);
                 break;
             }
             case 2:
             {
-                InitializePlayerComponent(2, new Color(1, 1, 0), YellowBarn);
+				YellowBarn.gameObject.SetActive(true);
+				InitializePlayerComponent(2, new Color(1, 1, 0), YellowBarn);
                 break;
             }
             case 3:
             {
-                InitializePlayerComponent(3, new Color(0, 0, 1), BlueBarn);
+				BlueBarn.gameObject.SetActive(true);
+				InitializePlayerComponent(3, new Color(0, 0, 1), BlueBarn);
                 break;
             }
         }
