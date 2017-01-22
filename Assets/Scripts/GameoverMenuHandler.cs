@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameoverMenuHandler : MonoBehaviour
 {
     GameStateManager GameStateManager;
+    Lobby Lobby;
 
     public Sprite GreenWon;
     public Sprite RedWon;
@@ -18,6 +19,7 @@ public class GameoverMenuHandler : MonoBehaviour
     void Start()
     {
         GameStateManager = FindObjectOfType<GameStateManager>();
+        Lobby = FindObjectOfType<Lobby>();
 
         // Swap panel for correct one
         switch (GameStateManager.Winner.playerIndex)
@@ -48,10 +50,11 @@ public class GameoverMenuHandler : MonoBehaviour
         {
             x360_Gamepad pad = GamepadManager.Instance.GetGamepad(i + 1);
             if (!pad.IsConnected) continue;
-            bool pressed = pad.GetButton("Start");
+            bool pressed = pad.GetButtonDown("Start");
             if (pressed)
             {
-                Destroy(GameStateManager);
+                Destroy(Lobby.gameObject);
+                Destroy(GameStateManager.gameObject);
                 SceneManager.LoadScene("MainMenu");
                 return;
             }
