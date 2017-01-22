@@ -94,16 +94,16 @@ public class Player : MonoBehaviour
 				break;
 			case 1:
 				{
-					BrainwaveImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 30, -(Screen.height / 2) + 30);
-					BlastImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 100, -(Screen.height / 2) + 30);
-					CommandImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 170, -(Screen.height / 2) + 30);
+					BrainwaveImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 30, -(Screen.height / 2) + 125);
+					BlastImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 100, -(Screen.height / 2) + 125);
+					CommandImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 170, -(Screen.height / 2) + 125);
 				}
 				break;
 			case 2:
 				{
-					BrainwaveImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 170, -(Screen.height / 2) + 30);
-					BlastImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 100, -(Screen.height / 2) + 30);
-					CommandImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 30, -(Screen.height / 2) + 30);
+					BrainwaveImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 170, -(Screen.height / 2) + 125);
+					BlastImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 100, -(Screen.height / 2) + 125);
+					CommandImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 30, -(Screen.height / 2) + 125);
 				}
 				break;
 			case 3:
