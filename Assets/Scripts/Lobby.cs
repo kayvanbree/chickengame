@@ -9,6 +9,10 @@ public class Lobby : MonoBehaviour
     private int numberPlayers = 0;
 
     private PlayerManager PlayerManager;
+    private bool readyToStart = false;
+
+    public int minPlayers = 2;
+    public GameObject StartText;
 
     void OnLevelWasLoaded()
     {
@@ -43,13 +47,15 @@ public class Lobby : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Game");
+        if(readyToStart)
+            SceneManager.LoadScene("Game");
     }
 
     public void AddPlayer(int index)
     {
         Players[index].Activate();
         numberPlayers++;
+        UpdateStartState();
         Debug.Log("Player " + (index + 1) + " entered the game");
     }
 
@@ -57,6 +63,17 @@ public class Lobby : MonoBehaviour
     {
         Players[index].Deactivate();
         numberPlayers--;
+        UpdateStartState();
         Debug.Log("Player " + (index + 1) + " has left the game");
+    }
+
+    public void UpdateStartState()
+    {
+        readyToStart = numberPlayers >= minPlayers;
+
+        if (readyToStart)
+            StartText.gameObject.SetActive(true);
+        else
+            StartText.gameObject.SetActive(false);
     }
 }
