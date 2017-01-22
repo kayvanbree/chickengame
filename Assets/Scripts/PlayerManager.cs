@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
 	private int numberPlayers = -1;
 
 	// Use this for initialization
-	void Start()
+	public void SetButtonIndices()
 	{
 		numberPlayers = GamepadManager.Instance.GamepadCount;
 		for (int i = 0; i < 24; i++)
@@ -25,17 +25,17 @@ public class PlayerManager : MonoBehaviour
 
         Players = new GameObject[numberPlayers];
 
-		GreenBarn.gameObject.SetActive(false);
-		RedBarn.gameObject.SetActive(false);
-		YellowBarn.gameObject.SetActive(false);
-		BlueBarn.gameObject.SetActive(false);
-	}
+        GreenBarn.gameObject.SetActive(false);
+        RedBarn.gameObject.SetActive(false);
+        YellowBarn.gameObject.SetActive(false);
+        BlueBarn.gameObject.SetActive(false);
+    }
 
     /// <summary>
     /// Adds a player to the game on the given index
     /// </summary>
     /// <param name="index"></param>
-    void AddPlayer(int index)
+    public void AddPlayer(int index)
     {
         // instantiate player on position (later use to spawn at real pos)
         GameObject player = Instantiate(PlayerPrefab, new Vector3(0.0f, 2.0f, 0.0f), PlayerPrefab.transform.rotation) as GameObject;
