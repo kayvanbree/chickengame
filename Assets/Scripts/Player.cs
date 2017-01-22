@@ -209,6 +209,13 @@ public class Player : MonoBehaviour
 									mat.SetColor("_Color", playerColor);
 									hit.collider.gameObject.GetComponentInChildren<Renderer>().materials[i] = mat;
 								}
+
+                                if (hit.collider.gameObject.GetComponentInChildren<Renderer>().materials[i].name == "ChickenTexture (Instance)")
+                                {
+                                    Material mat = hit.collider.gameObject.GetComponentInChildren<Renderer>().materials[i];
+                                    mat.SetColor("_Color", playerColor);
+                                    hit.collider.gameObject.GetComponentInChildren<Renderer>().materials[i] = mat;
+                                }
 							}
 						}
 					}

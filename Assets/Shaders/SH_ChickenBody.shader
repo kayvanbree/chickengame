@@ -3,11 +3,13 @@
 // Shader created with Shader Forge v1.30 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.30;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,lico:1,lgpr:1,limd:1,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False;n:type:ShaderForge.SFN_Final,id:4013,x:32719,y:32712,varname:node_4013,prsc:2|diff-9613-RGB,spec-308-OUT,gloss-308-OUT;n:type:ShaderForge.SFN_Tex2d,id:9613,x:32351,y:32700,ptovrint:False,ptlb:node_9613,ptin:_node_9613,varname:node_9613,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:fbe7dc71cd3426840b96a187ec6bc53a,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector1,id:308,x:32473,y:32924,varname:node_308,prsc:2,v1:0;proporder:9613;pass:END;sub:END;*/
+/*SF_DATA;ver:1.30;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,lico:1,lgpr:1,limd:1,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False;n:type:ShaderForge.SFN_Final,id:4013,x:32719,y:32712,varname:node_4013,prsc:2|diff-7692-OUT,spec-308-OUT,gloss-308-OUT;n:type:ShaderForge.SFN_Tex2d,id:9613,x:32030,y:32545,ptovrint:False,ptlb:node_9613,ptin:_node_9613,varname:node_9613,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:fbe7dc71cd3426840b96a187ec6bc53a,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector1,id:308,x:32473,y:32924,varname:node_308,prsc:2,v1:0;n:type:ShaderForge.SFN_Tex2d,id:8251,x:32037,y:32885,ptovrint:False,ptlb:node_8251,ptin:_node_8251,varname:node_8251,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:83f709b588a28864ba8074d9bfd40be6,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Lerp,id:7692,x:32491,y:32539,varname:node_7692,prsc:2|A-9613-RGB,B-7297-OUT,T-8251-R;n:type:ShaderForge.SFN_Multiply,id:7297,x:32368,y:32751,varname:node_7297,prsc:2|A-9613-RGB,B-4983-RGB;n:type:ShaderForge.SFN_Color,id:4983,x:32037,y:32727,ptovrint:False,ptlb:Color,ptin:_Color,varname:node_4983,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:1,c2:1,c3:1,c4:1;proporder:9613-8251-4983;pass:END;sub:END;*/
 
 Shader "Shader Forge/SH_ChickenBody" {
     Properties {
         _node_9613 ("node_9613", 2D) = "white" {}
+        _node_8251 ("node_8251", 2D) = "white" {}
+        _Color ("Color", Color) = (1,1,1,1)
     }
     SubShader {
         Tags {
@@ -32,6 +34,8 @@ Shader "Shader Forge/SH_ChickenBody" {
             #pragma target 3.0
             uniform float4 _LightColor0;
             uniform sampler2D _node_9613; uniform float4 _node_9613_ST;
+            uniform sampler2D _node_8251; uniform float4 _node_8251_ST;
+            uniform float4 _Color;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -81,7 +85,8 @@ Shader "Shader Forge/SH_ChickenBody" {
                 float3 indirectDiffuse = float3(0,0,0);
                 indirectDiffuse += UNITY_LIGHTMODEL_AMBIENT.rgb; // Ambient Light
                 float4 _node_9613_var = tex2D(_node_9613,TRANSFORM_TEX(i.uv0, _node_9613));
-                float3 diffuseColor = _node_9613_var.rgb;
+                float4 _node_8251_var = tex2D(_node_8251,TRANSFORM_TEX(i.uv0, _node_8251));
+                float3 diffuseColor = lerp(_node_9613_var.rgb,(_node_9613_var.rgb*_Color.rgb),_node_8251_var.r);
                 float3 diffuse = (directDiffuse + indirectDiffuse) * diffuseColor;
 /// Final Color:
                 float3 finalColor = diffuse + specular;
@@ -111,6 +116,8 @@ Shader "Shader Forge/SH_ChickenBody" {
             #pragma target 3.0
             uniform float4 _LightColor0;
             uniform sampler2D _node_9613; uniform float4 _node_9613_ST;
+            uniform sampler2D _node_8251; uniform float4 _node_8251_ST;
+            uniform float4 _Color;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -158,7 +165,8 @@ Shader "Shader Forge/SH_ChickenBody" {
                 NdotL = max(0.0,dot( normalDirection, lightDirection ));
                 float3 directDiffuse = max( 0.0, NdotL) * attenColor;
                 float4 _node_9613_var = tex2D(_node_9613,TRANSFORM_TEX(i.uv0, _node_9613));
-                float3 diffuseColor = _node_9613_var.rgb;
+                float4 _node_8251_var = tex2D(_node_8251,TRANSFORM_TEX(i.uv0, _node_8251));
+                float3 diffuseColor = lerp(_node_9613_var.rgb,(_node_9613_var.rgb*_Color.rgb),_node_8251_var.r);
                 float3 diffuse = directDiffuse * diffuseColor;
 /// Final Color:
                 float3 finalColor = diffuse + specular;
