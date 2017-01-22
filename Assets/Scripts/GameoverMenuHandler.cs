@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameoverMenuHandler : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameoverMenuHandler : MonoBehaviour
     public Sprite YellowWon;
     public Sprite BlueWon;
 
+    public Image PlayerWonImage;
+
     void Start()
     {
         GameStateManager = FindObjectOfType<GameStateManager>();
@@ -20,16 +23,16 @@ public class GameoverMenuHandler : MonoBehaviour
         switch (GameStateManager.Winner.playerIndex)
         {
             case 0:
-                Debug.Log("Green won");
+                PlayerWonImage.sprite = GreenWon;
                 break;
             case 1:
-                Debug.Log("Red won");
+                PlayerWonImage.sprite = RedWon;
                 break;
             case 2:
-                Debug.Log("Yellow won");
+                PlayerWonImage.sprite = YellowWon;
                 break;
             case 3:
-                Debug.Log("Blue won");
+                PlayerWonImage.sprite = BlueWon;
                 break;
         }
     }
@@ -48,6 +51,7 @@ public class GameoverMenuHandler : MonoBehaviour
             bool pressed = pad.GetButton("Start");
             if (pressed)
             {
+                Destroy(GameStateManager);
                 SceneManager.LoadScene("MainMenu");
                 return;
             }
