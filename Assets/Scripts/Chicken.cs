@@ -42,8 +42,6 @@ public class Chicken : MonoBehaviour
 	void Start ()
     {
         Velocity = Vector3.zero;
-        //Target = null;
-        wanderTarget = GetRandomWanderTarget();
         SwitchBehaviour(Idle());
 	}
 
@@ -58,6 +56,12 @@ public class Chicken : MonoBehaviour
 	void Update ()
     {
        
+    }
+
+    void GoIdle()
+    {
+        chickenState = ChickenState.Idle;
+        SwitchBehaviour(Idle());
     }
 
     IEnumerator Idle()
@@ -93,6 +97,7 @@ public class Chicken : MonoBehaviour
         Barn barn = gameObject.GetComponent<Barn>();
         if(barn != null)
         {
+            chickenState = ChickenState.AttackBase;
             SwitchBehaviour(Attack(barn));
         } 
     }
@@ -117,7 +122,7 @@ public class Chicken : MonoBehaviour
         else
         {
             // Idle when base down
-            chickenState = ChickenState.Idle;
+            GoIdle();
         }
         
     }
@@ -132,6 +137,7 @@ public class Chicken : MonoBehaviour
         if (barn != null && barn.State == BarnState.Alive)
         {
             // start coroutine of moving towards target
+            chickenState = ChickenState.GoToBase;
             SwitchBehaviour(MoveTowardsBarn(barn.transform));
         }
     }
@@ -149,7 +155,6 @@ public class Chicken : MonoBehaviour
 
 			yield return null;
 		}
-        chickenState = ChickenState.AttackBase;
         AttackBarn(barnTransform.gameObject);
     }
 

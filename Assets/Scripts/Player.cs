@@ -25,6 +25,13 @@ public class Player : MonoBehaviour
 
     List<Collider> InRadius = new List<Collider>();
 
+    enum PlayerState
+    {
+        Playing,
+        GameOver
+    }
+    PlayerState State = PlayerState.Playing;
+
 	public Color playerColor;
 
 	private GameObject brainwaveclone;
@@ -55,13 +62,15 @@ public class Player : MonoBehaviour
 
     public void GameOver()
     {
+        gameObject.SetActive(false);
         Debug.Log("Game over for player " + playerIndex);
     }
 
 	// Update is called once per frame
 	public void Update()
 	{
-		HandleInput();
+        if (State == PlayerState.Playing)
+		    HandleInput();
 	}
 
 	private void HandleInput()
