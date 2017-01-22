@@ -20,6 +20,7 @@ public class GameoverMenuHandler : MonoBehaviour
     void Start()
     {
         GameStateManager = FindObjectOfType<GameStateManager>();
+        Lobby = FindObjectOfType<Lobby>();
 
         // Swap panel for correct one
         switch (GameStateManager.Winner.playerIndex)
