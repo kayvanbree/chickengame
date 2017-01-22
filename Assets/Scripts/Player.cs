@@ -44,13 +44,6 @@ public class Player : MonoBehaviour
 	public float BrainwaveTimer;
 	public float BlastTimer;
 
-	enum PlayerState
-    {
-        Playing,
-        GameOver
-    }
-    PlayerState State = PlayerState.Playing;
-
 	public Color playerColor;
 
 	private GameObject brainwaveclone;
