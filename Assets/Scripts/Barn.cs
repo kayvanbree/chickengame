@@ -39,6 +39,11 @@ public class Barn : MonoBehaviour
 		FireParticle4.Stop();
 	}
 
+    public bool IsAlive()
+    {
+        return hp > 0 && gameObject.activeSelf;
+    }
+
 	public void Attack(float damage)
     {
         if (State == BarnState.Dead) return;

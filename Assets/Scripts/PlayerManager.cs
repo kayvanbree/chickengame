@@ -13,7 +13,6 @@ public class PlayerManager : MonoBehaviour
 	private GameObject[] Players;
 	private int[] buttonIndices = new int[24];
 	private int numberPlayers = -1;
-	private Vector3[] PlayerSpawnPositions = new Vector3[4];
 
 	// Use this for initialization
 	public void SetButtonIndices()
@@ -30,12 +29,7 @@ public class PlayerManager : MonoBehaviour
         RedBarn.gameObject.SetActive(false);
         YellowBarn.gameObject.SetActive(false);
         BlueBarn.gameObject.SetActive(false);
-
-		PlayerSpawnPositions[0] = new Vector3(-7,2,5);
-		PlayerSpawnPositions[1] = new Vector3(-6,2,-5);
-		PlayerSpawnPositions[2] = new Vector3(9,2,-5);
-		PlayerSpawnPositions[3] = new Vector3(10,2,5);
-	}
+    }
 
     /// <summary>
     /// Adds a player to the game on the given index
@@ -44,10 +38,9 @@ public class PlayerManager : MonoBehaviour
     public void AddPlayer(int index)
     {
         // instantiate player on position (later use to spawn at real pos)
-        GameObject player = Instantiate(PlayerPrefab, PlayerSpawnPositions[index], PlayerPrefab.transform.rotation) as GameObject;
-		player.transform.LookAt(new Vector3(0, 2, 0));
+        GameObject player = Instantiate(PlayerPrefab, new Vector3(0.0f, 2.0f, 0.0f), PlayerPrefab.transform.rotation) as GameObject;
 
-		player.GetComponent<Player>().gamepad = GamepadManager.Instance.GetGamepad(index + 1);
+        player.GetComponent<Player>().gamepad = GamepadManager.Instance.GetGamepad(index + 1);
 
         player.GetComponent<Player>().playerIndex = index;
 
@@ -125,13 +118,13 @@ public class PlayerManager : MonoBehaviour
 			//if a player pressed a button
 			if (currentPlayer.currentButtonIndex > -1)
 			{
-				if (currentPlayer.buttonIndices[0] == currentPlayer.currentButtonIndex) //button A
+				if (currentPlayer.buttonIndices[0] == currentPlayer.currentButtonIndex && i != 0 && GreenBarn.IsAlive()) //button A
 				{ currentPlayer.SendToBarn(GreenBarn); }
-				else if (currentPlayer.buttonIndices[1] == currentPlayer.currentButtonIndex) // button B
+				else if (currentPlayer.buttonIndices[1] == currentPlayer.currentButtonIndex && i != 1 && RedBarn.IsAlive()) // button B
 				{ currentPlayer.SendToBarn(RedBarn); }
-				else if (currentPlayer.buttonIndices[2] == currentPlayer.currentButtonIndex) // button Y
+				else if (currentPlayer.buttonIndices[2] == currentPlayer.currentButtonIndex && i != 2 && YellowBarn.IsAlive()) // button Y
 				{ currentPlayer.SendToBarn(YellowBarn); }
-				else if (currentPlayer.buttonIndices[3] == currentPlayer.currentButtonIndex) // button X
+				else if (currentPlayer.buttonIndices[3] == currentPlayer.currentButtonIndex && i != 3 && BlueBarn.IsAlive()) // button X
 				{ currentPlayer.SendToBarn(BlueBarn); }
 			}
 		}
