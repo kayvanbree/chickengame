@@ -15,7 +15,9 @@ public class PlayerManager : MonoBehaviour
 	private int[] buttonIndices = new int[24];
 	private int numberPlayers = -1;
 
-    GameStateManager GameStateManager;
+	private Vector3[] PlayerSpawnPositions = new Vector3[4];
+
+	GameStateManager GameStateManager;
 
 	// Use this for initialization
 	public void SetButtonIndices()
@@ -33,7 +35,12 @@ public class PlayerManager : MonoBehaviour
         YellowBarn.gameObject.SetActive(false);
         BlueBarn.gameObject.SetActive(false);
 
-        GameStateManager = FindObjectOfType<GameStateManager>();
+		PlayerSpawnPositions[0] = new Vector3(-7, 2, 5);
+		PlayerSpawnPositions[1] = new Vector3(-6, 2, -5);
+		PlayerSpawnPositions[2] = new Vector3(9, 2, -5);
+		PlayerSpawnPositions[3] = new Vector3(10, 2, 5);
+
+		GameStateManager = FindObjectOfType<GameStateManager>();
     }
 
     /// <summary>
@@ -43,9 +50,10 @@ public class PlayerManager : MonoBehaviour
     public void AddPlayer(int index)
     {
         // instantiate player on position (later use to spawn at real pos)
-        GameObject player = Instantiate(PlayerPrefab, new Vector3(0.0f, 2.0f, 0.0f), PlayerPrefab.transform.rotation) as GameObject;
+		GameObject player = Instantiate(PlayerPrefab, PlayerSpawnPositions[index], PlayerPrefab.transform.rotation) as GameObject;
+		player.transform.LookAt(new Vector3(0, 2, 0));
 
-        player.GetComponent<Player>().gamepad = GamepadManager.Instance.GetGamepad(index + 1);
+		player.GetComponent<Player>().gamepad = GamepadManager.Instance.GetGamepad(index + 1);
 
         player.GetComponent<Player>().playerIndex = index;
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public enum PlayerState
 {
@@ -40,15 +41,22 @@ public class Player : MonoBehaviour
 	public float BrainwaveCooldown = 6.0f;
 	public float BlastCooldown = 12.0f;
 
-	public float CommandTimer;
-	public float BrainwaveTimer;
-	public float BlastTimer;
+	private float CommandTimer;
+	private float BrainwaveTimer;
+	private float BlastTimer;
 
 	public Color playerColor;
 
 	private GameObject brainwaveclone;
 	public GameObject BrainWavePrefab;
 	public GameObject SmokeBlastParticlePrefab;
+
+	public Image CooldownBrainwaveImage;
+	public Image CooldownBlastImage;
+	public Image CooldownCommandImage;
+	public Image BrainwaveImage;
+	public Image BlastImage;
+	public Image CommandImage;
 
 	private Barn barn;
 	public Barn Barn
@@ -74,6 +82,40 @@ public class Player : MonoBehaviour
 		CommandTimer = 0.0f;
 		BrainwaveTimer = 0.0f;
 		BlastTimer = 0.0f;
+
+		switch(playerIndex)
+		{
+			case 0:
+				{
+					BrainwaveImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 30, (Screen.height / 2) - 30);
+					BlastImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 230, (Screen.height / 2) - 30);
+					CommandImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 430, (Screen.height / 2) - 30);
+				}
+				break;
+			case 1:
+				{
+					BrainwaveImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 30, -(Screen.height / 2) + 125);
+					BlastImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 100, -(Screen.height / 2) + 125);
+					CommandImage.rectTransform.localPosition = new Vector2(-(Screen.width / 2) + 170, -(Screen.height / 2) + 125);
+				}
+				break;
+			case 2:
+				{
+					BrainwaveImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 170, -(Screen.height / 2) + 125);
+					BlastImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 100, -(Screen.height / 2) + 125);
+					CommandImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 30, -(Screen.height / 2) + 125);
+				}
+				break;
+			case 3:
+				{
+					BrainwaveImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 170, (Screen.height / 2) - 30);
+					BlastImage.rectTransform.localPosition = new Vector2((Screen.width / 2) - 100, (Screen.height / 2) - 30);
+					CommandImage.rectTransform.localPosition = new Vector2((Screen.width / 2), (Screen.height / 2) - 30);
+				}
+				break;
+		}
+
+		this.GetComponentInChildren<Renderer>().material.SetColor("_Color", playerColor);
 	}
 
     public void GameOver()
@@ -89,6 +131,10 @@ public class Player : MonoBehaviour
 	{
         if (State == PlayerState.Playing)
 		    HandleInput();
+
+		CooldownBlastImage.fillAmount = Mathf.Lerp(0.0f, 1.0f, BlastTimer / BlastCooldown);
+		CooldownBrainwaveImage.fillAmount = Mathf.Lerp(0.0f, 1.0f, BrainwaveTimer / BrainwaveCooldown);
+		CooldownCommandImage.fillAmount = Mathf.Lerp(0.0f, 1.0f, CommandTimer / CommandCooldown);
 	}
 
 	private void HandleInput()
@@ -123,7 +169,6 @@ public class Player : MonoBehaviour
 					// get the index for this button for this player and set it to the current button index
 					// this way we can check if this is the same as the one on the screen
 					currentButtonIndex = GetButtonIndex("A");
-					CommandTimer = CommandCooldown;
 				}
 			}
 			if (gamepad.GetButtonDown("B"))
@@ -138,7 +183,6 @@ public class Player : MonoBehaviour
 						audioSource.Play();
 					}
 					currentButtonIndex = GetButtonIndex("B");
-					CommandTimer = CommandCooldown;
 				}
 			}
 			if (gamepad.GetButtonDown("X"))
@@ -153,7 +197,6 @@ public class Player : MonoBehaviour
 						audioSource.Play();
 					}
 					currentButtonIndex = GetButtonIndex("X");
-					CommandTimer = CommandCooldown;
 				}
 			}
 			if (gamepad.GetButtonDown("Y"))
@@ -168,7 +211,6 @@ public class Player : MonoBehaviour
 						audioSource.Play();
 					}
 					currentButtonIndex = GetButtonIndex("Y");
-					CommandTimer = CommandCooldown;
 				}
 			}
 		}
@@ -197,7 +239,6 @@ public class Player : MonoBehaviour
 							//Send out beam
 							brainwaveclone = Instantiate(BrainWavePrefab, transform.position, transform.rotation);
 
-
 							// then set the new owner for this player (brainwash this chicken)
 							hit.collider.gameObject.GetComponent<Chicken>().SetOwner(this);
 
@@ -217,17 +258,19 @@ public class Player : MonoBehaviour
                                     hit.collider.gameObject.GetComponentInChildren<Renderer>().materials[i] = mat;
                                 }
 							}
+
+							// play sound
+							if (!audioSource.isPlaying)
+							{
+								audioSource.clip = clipTriggerRight;
+								audioSource.Play();
+							}
+							currentButtonIndex = GetButtonIndex("RT");
+							BrainwaveTimer = BrainwaveCooldown;
 						}
 					}
 				}
-				// play sound
-				if (!audioSource.isPlaying)
-				{
-					audioSource.clip = clipTriggerRight;
-					audioSource.Play();
-				}
-				currentButtonIndex = GetButtonIndex("RT");
-				BrainwaveTimer = BrainwaveCooldown;
+
 			}
 		}
 		else
@@ -300,6 +343,7 @@ public class Player : MonoBehaviour
 	{
 		if (currentHitChicken != null)
 		{
+			CommandTimer = CommandCooldown;
 			currentHitChicken.GetComponent<Chicken>().GoToBarn(playersBarn);
 			currentHitChicken = null;
 		}
